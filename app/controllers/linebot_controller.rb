@@ -27,19 +27,18 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
-            
+
             if event.message['text'].include?("好き")
               response = "いひひ"
             elsif event.message["text"].include?("行ってきます")
               response = "はーい"
             elsif event.message['text'].include?("おはよう")
-              response = "うーーーーーーーん。。。（また寝る）"
-            elsif event.message['text'].include?("さら")
-              response = "さらちゃん！"
-            elsif event.message['text'].include?("ママ")
-              response = "ママたん！"
+              response = "おはようございます"
+            elsif event.message['text'].include?("暇")
+              response = "暇？"
             else
               response = event.message['text']
+              response << "??そうなのね"
             end
 
             message = {

@@ -35,6 +35,10 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Postback
         message = "[POSTBACK]\n#{event['postback']['data']} (#{JSON.generate(event['postback']['params'])})"
         reply_text(event, message)
+      when Line::Bot::Event::Unsend
+        handle_unsend(event)
+      else
+        reply_text(event, "event type: #{event}\nis unable to respond")
       end
     end
 
@@ -145,5 +149,21 @@ class LinebotController < ApplicationController
     )
     logger.warn res.read_body unless Net::HTTPOK === res
     res
+  end
+
+  def handle_unsend(event)
+    source = event['source']
+    id = case source['type']
+    when 'user'
+      source['userId']
+    when 'group'
+      source['groupId']
+    when 'room'
+      source['roomId']
+    end
+    client.push_message(id, {
+      type: 'text',
+      text: "[UNSEND]\nmessageId: #{event['unsend']['messageId']}"
+    })
   end
 end

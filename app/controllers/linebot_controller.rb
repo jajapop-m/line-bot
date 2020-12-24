@@ -26,7 +26,7 @@ class LinebotController < ApplicationController
       case event
       when Line::Bot::Event::Message
         handle_message(event)
-      when Line::Bot::Evnet::Follow
+      when Line::Bot::Event::Follow
         messages = [
           "友達登録",
           "ありがとうございます！"

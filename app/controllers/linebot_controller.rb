@@ -32,6 +32,9 @@ class LinebotController < ApplicationController
           "ありがとうございます！"
         ]
         reply_text(event, messages)
+      when Line::Bot::Event::Postback
+        message = "[POSTBACK]\n#{event['postback']['data']} (#{JSON.generate(event['postback']['params'])})"
+        reply_text(event, message)
       end
     end
 

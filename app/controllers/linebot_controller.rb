@@ -56,7 +56,7 @@ class LinebotController < ApplicationController
         response = [response, "そうなのね"]
       end
 
-      client.reply_text(event, response)
+      reply_text(event, response)
     end
   end
 

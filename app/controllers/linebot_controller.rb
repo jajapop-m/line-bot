@@ -41,28 +41,81 @@ class LinebotController < ApplicationController
   def handle_message(event)
     case event.type
     when Line::Bot::Event::MessageType::Text
+      message = event.message['text']
 
-      if event.message['text'].include?("好き")
+      if message.include?("好き")
         response = "いひひ"
-      elsif event.message["text"].include?("行ってきます")
+      elsif message.include?("行ってきます")
         response = "はーい"
-      elsif event.message['text'].include?("おはよう")
+      elsif message.include?("おはよう")
         response = "おはようございます"
-      elsif event.message['text'].include?("暇")
+      elsif message.include?("暇")
         response = "暇？"
-      elsif event.message['text'] == 'confirm'
+      elsif message == 'confirm'
         reply_content(event, {
           type: 'template',
           altText: 'Confirm alt text',
           template: {
             type: 'confirm',
-            text: 'Do it?',
+            text: '「はい」か「いいえ」を選んでください',
             actions: [
-              { label: 'Yes', type: 'message', text: 'Yes!' },
-              { label: 'No', type: 'message', text: 'No!' },
+              { label: 'はい', type: 'message', text: 'はい' },
+              { label: 'いいえ', type: 'message', text: 'いいえ' },
             ],
           }
         })
+      elsif message == 'carousel'
+        reply_content(event, {
+          type: 'template',
+          altText: 'Carousel alt text',
+          template: {
+            type: 'carousel',
+            columns: [
+              {
+                title: 'hoge',
+                text: 'fuga',
+                actions: [
+                  { label: 'Go to line.me', type: 'uri', uri: 'https://line.me', altUri: {desktop: 'https://line.me#desktop'} },
+                  { label: 'Send postback', type: 'postback', data: 'hello world' },
+                  { label: 'Send message', type: 'message', text: 'This is message' }
+                ]
+              },
+              {
+                title: 'Datetime Picker',
+                text: 'Please select a date, time or datetime',
+                actions: [
+                  {
+                    type: 'datetimepicker',
+                    label: "Datetime",
+                    data: 'action=sel',
+                    mode: 'datetime',
+                    initial: '2017-06-18T06:15',
+                    max: '2100-12-31T23:59',
+                    min: '1900-01-01T00:00'
+                  },
+                  {
+                    type: 'datetimepicker',
+                    label: "Date",
+                    data: 'action=sel&only=date',
+                    mode: 'date',
+                    initial: '2017-06-18',
+                    max: '2100-12-31',
+                    min: '1900-01-01'
+                  },
+                  {
+                    type: 'datetimepicker',
+                    label: "Time",
+                    data: 'action=sel&only=time',
+                    mode: 'time',
+                    initial: '12:15',
+                    max: '23:00',
+                    min: '10:00'
+                  }
+                ]
+              }
+            ]
+          }
+        )
       else
         response = event.message['text']
         response << "??"

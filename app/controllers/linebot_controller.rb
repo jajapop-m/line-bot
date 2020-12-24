@@ -27,9 +27,13 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         handle_message(event)
       when Line::Bot::Event::Follow
+        profile = client.get_profile(event['source']['userId'])
+        profile = JSON.parse(profile.read_body)
+        user_name = profile['displayName']
         messages = [
-          "友達登録",
-          "ありがとうございます！"
+          "#{user_name}さん、友達登録ありがとうございます！",
+          "特殊メッセージ一覧:",
+          "confirm, carousel, push, profile"
         ]
         reply_text(event, messages)
       when Line::Bot::Event::Postback
@@ -131,9 +135,7 @@ class LinebotController < ApplicationController
       elsif message == 'profile'
         if event['source']['type'] == 'user'
           profile = client.get_profile(event['source']['userId'])
-          Rails.logger.debug(profile)
           profile = JSON.parse(profile.read_body)
-          Rails.logger.debug(profile)
           reply_text(event, [
             "Display name\n#{profile['displayName']}",
             "Status message\n#{profile['statusMessage']}"

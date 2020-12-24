@@ -205,8 +205,8 @@ class LinebotController < ApplicationController
           52114140 52114141 52114142 52114143 52114144 52114145 52114146 52114147 52114148 52114149].split
       ]
     ]
-    id = [0,1,2].sample if id.nil?
+    id = [0,1,2].sample unless [11537,11538,11539].include? id.to_i
     id ||= (id.to_i+1) % 3
-    [availableStickerList[id], availableStickerList[id][1].sample]
+    [availableStickerList[id][0], availableStickerList[id][1].sample]
   end
 end

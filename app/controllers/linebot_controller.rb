@@ -166,7 +166,7 @@ class LinebotController < ApplicationController
       messages.push(
         type: 'sticker',
         packageId: event.message['packageId'],
-        stickerId: event.message['stickerId']+1
+        stickerId: (event.message['stickerId'].to_i+1).to_s
       )
     end
     reply_content(event, messages)

@@ -115,7 +115,8 @@ class LinebotController < ApplicationController
               }
             ]
           }
-        )
+        })
+
       else
         response = event.message['text']
         response << "??"

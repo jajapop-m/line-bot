@@ -50,6 +50,19 @@ class LinebotController < ApplicationController
         response = "おはようございます"
       elsif event.message['text'].include?("暇")
         response = "暇？"
+      elsif event.message['text'] == 'confirm'
+        reply_content(event, {
+          type: 'template',
+          altText: 'Confirm alt text',
+          template: {
+            type: 'confirm',
+            text: 'Do it?',
+            actions: [
+              { label: 'Yes', type: 'message', text: 'Yes!' },
+              { label: 'No', type: 'message', text: 'No!' },
+            ],
+          }
+        })
       else
         response = event.message['text']
         response << "??"
@@ -66,5 +79,14 @@ class LinebotController < ApplicationController
       event['replyToken'],
       texts.map { |text| {type: 'text', text: text} }
     )
+  end
+
+  def reply_content(event, messages)
+    res = client.reply_message(
+      event['replyToken'],
+      messages
+    )
+    logger.warn res.read_body unless Net::HTTPOK === res
+    res
   end
 end

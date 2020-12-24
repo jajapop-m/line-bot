@@ -206,10 +206,7 @@ class LinebotController < ApplicationController
       ]
     ]
     i = [0,1,2].sample unless [11537,11538,11539].include? id.to_i
-    Rails.logger.debug(i)
     i ||= (id.to_i+1) % 3
-    Rails.logger.debug(i)
-    Rails.logger.debug([availableStickerList[i][0], availableStickerList[i][1].sample])
     [availableStickerList[i][0], availableStickerList[i][1].sample]
   end
 end

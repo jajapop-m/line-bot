@@ -205,11 +205,11 @@ class LinebotController < ApplicationController
           52114140 52114141 52114142 52114143 52114144 52114145 52114146 52114147 52114148 52114149].split
       ]
     ]
-    id = [0,1,2].sample unless [11537,11538,11539].include? id.to_i
-    Rails.logger.debug(id)
-    id ||= (id.to_i+1) % 3
-    Rails.logger.debug(id)
-    Rails.logger.debug([availableStickerList[id][0], availableStickerList[id][1].sample])
-    [availableStickerList[id][0], availableStickerList[id][1].sample]
+    i = [0,1,2].sample unless [11537,11538,11539].include? id.to_i
+    Rails.logger.debug(i)
+    i ||= (id.to_i+1) % 3
+    Rails.logger.debug(i)
+    Rails.logger.debug([availableStickerList[i][0], availableStickerList[i][1].sample])
+    [availableStickerList[i][0], availableStickerList[i][1].sample]
   end
 end

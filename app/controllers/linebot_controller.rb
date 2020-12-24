@@ -128,6 +128,19 @@ class LinebotController < ApplicationController
 
       elsif message == 'push'
         handle_unsend(event)
+      elsif message == 'profile'
+        if event['source']['type'] == 'user'
+          profile = client.get_profile(event['source']['userId'])
+          Rails.logger.debug(profile)
+          profile = JSON.parse(profile.read_body)
+          Rails.logger.debug(profile)
+          reply_text(event, [
+            "Display name\n#{profile['displayName']}",
+            "Status message\n#{profile['statusMessage']}"
+          ])
+        else
+          reply_text(event, "Bot can't use profile API without user ID")
+        end
       else
         response = event.message['text']
         response << "??"

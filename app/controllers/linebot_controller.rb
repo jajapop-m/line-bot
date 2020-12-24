@@ -156,8 +156,8 @@ class LinebotController < ApplicationController
   def handle_sticker(event)
     # Message API available stickers
     # https://developers.line.me/media/messaging-api/sticker_list.pdf
-    AvailableStickerList = [11537, 11538, 11539]
-    msgapi_available = AvailableStickerList.include? event.message['packageId']
+    availableStickerList = [11537, 11538, 11539]
+    msgapi_available = availableStickerList.include? event.message['packageId']
     messages = [{
       type: 'text',
       text: "[STICKER]\npackageId: #{event.message['packageId']}\nstickerId: #{event.message['stickerId']}"

@@ -126,6 +126,8 @@ class LinebotController < ApplicationController
           }
         })
 
+      elsif message == 'push'
+        handle_unsend(event)
       else
         response = event.message['text']
         response << "??"

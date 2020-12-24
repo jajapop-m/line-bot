@@ -182,7 +182,7 @@ class LinebotController < ApplicationController
     end
     client.push_message(id, {
       type: 'text',
-      text: "[UNSEND]\nmessageId: #{event['unsend']['messageId']}"
+      text: "[UNSEND]\n}"
     })
   end
 

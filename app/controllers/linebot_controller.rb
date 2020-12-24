@@ -163,11 +163,11 @@ class LinebotController < ApplicationController
       text: "[STICKER]\npackageId: #{event.message['packageId']}\nstickerId: #{event.message['stickerId']}"
     }]
     if msgapi_available
-      messages.push(
+      messages = [{
         type: 'sticker',
         packageId: event.message['packageId'],
-        stickerId: (event.message['stickerId'].to_i+1).to_s
-      )
+        stickerId: event.message['stickerId']
+      }]
     end
     reply_content(event, messages)
   end

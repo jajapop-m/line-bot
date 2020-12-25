@@ -143,6 +143,18 @@ class LinebotController < ApplicationController
         else
           reply_text(event, "Bot can't use profile API without user ID")
         end
+      elsif message == 'emoji'
+        reply_content(event, {
+          type: 'text',
+          text: 'Look at this: $ It\'s a LINE emoji!',
+          emojis: [
+            {
+                index: 14,
+                productId: '5ac1bfd5040ab15980c9b435',
+                emojiId: '001'
+            }
+          ]
+        })
       else
         response = event.message['text']
         response << "??"

@@ -42,6 +42,8 @@ class LinebotController < ApplicationController
         EOF
         pos = -1
         pos = index = text.index('$', pos+=1)
+        Rails.logger.debug(text.inspect)
+        Rails.logger.debug(index.inspect)
         reply_content({
           type: 'text',
           text: ,

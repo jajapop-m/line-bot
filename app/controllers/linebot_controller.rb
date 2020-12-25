@@ -49,8 +49,14 @@ class LinebotController < ApplicationController
               }
             ]
           },
-          "特殊メッセージ一覧:",
-          "confirm, carousel, push, profile"
+          {
+            type: 'text',
+            text: "特殊メッセージ一覧:"
+          },
+          {
+            type: 'text',
+            text: "confirm, carousel, push, profile"
+          }
         ]
         reply_content(event, messages)
       when Line::Bot::Event::Postback

@@ -46,7 +46,7 @@ class LinebotController < ApplicationController
         Rails.logger.debug(index.inspect)
         reply_content({
           type: 'text',
-          text: ,
+          text: text,
           emojis: [
               {
                 index: index,

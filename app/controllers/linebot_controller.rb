@@ -35,7 +35,7 @@ class LinebotController < ApplicationController
           "confirm, carousel, push, profile"
         ]
         text = <<~EOF
-          {user_name}さん、はじめまして$！
+          #{user_name}さん、はじめまして$！
           友だち追加ありがとうございます。
 
           このトークからの通知を受け取らない場合は、画面右上のメニューから通知をオフにしてください。
@@ -44,7 +44,7 @@ class LinebotController < ApplicationController
         pos = index = text.index('$', pos+=1)
         Rails.logger.debug(text.inspect)
         Rails.logger.debug(index.inspect)
-        reply_content({
+        reply_content(event,{
           type: 'text',
           text: text,
           emojis: [

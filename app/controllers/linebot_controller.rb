@@ -30,10 +30,6 @@ class LinebotController < ApplicationController
         profile = client.get_profile(event['source']['userId'])
         profile = JSON.parse(profile.read_body)
         user_name = profile['displayName']
-        messages = [
-          "特殊メッセージ一覧:",
-          "confirm, carousel, push, profile"
-        ]
         text = <<~EOF
           #{user_name}さん、はじめまして$！
           友だち追加ありがとうございます。
@@ -42,9 +38,7 @@ class LinebotController < ApplicationController
         EOF
         pos = -1
         pos = index = text.index('$', pos+=1)
-        Rails.logger.debug(text.inspect)
-        Rails.logger.debug(index.inspect)
-        reply_content(event,{
+        messages = [{
           type: 'text',
           text: text,
           emojis: [
@@ -54,8 +48,11 @@ class LinebotController < ApplicationController
                 emojiId: '001'
               }
             ]
-          })
-        reply_text(event, messages)
+          },
+          "特殊メッセージ一覧:",
+          "confirm, carousel, push, profile"
+        ]
+        reply_content(event, messages)
       when Line::Bot::Event::Postback
         message = "[POSTBACK]\n#{event['postback']['data']} (#{JSON.generate(event['postback']['params'])})"
         reply_text(event, message)

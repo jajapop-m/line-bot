@@ -31,10 +31,28 @@ class LinebotController < ApplicationController
         profile = JSON.parse(profile.read_body)
         user_name = profile['displayName']
         messages = [
-          "#{user_name}さん、友達登録ありがとうございます！",
           "特殊メッセージ一覧:",
           "confirm, carousel, push, profile"
         ]
+        text = <<~EOF
+          {user_name}さん、はじめまして$！
+          友だち追加ありがとうございます。
+
+          このトークからの通知を受け取らない場合は、画面右上のメニューから通知をオフにしてください。
+        EOF
+        pos = -1
+        pos = index = text.index('$', pos+=1)
+        reply_content({
+          type: 'text',
+          text: ,
+          emojis: [
+              {
+                index: index,
+                productId: '5ac1bfd5040ab15980c9b435',
+                emojiId: '001'
+              }
+            ]
+          })
         reply_text(event, messages)
       when Line::Bot::Event::Postback
         message = "[POSTBACK]\n#{event['postback']['data']} (#{JSON.generate(event['postback']['params'])})"
